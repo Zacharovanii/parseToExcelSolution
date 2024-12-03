@@ -1,6 +1,6 @@
-import os
 import re
 from datetime import datetime
+from pathlib import Path
 
 import zipfile
 import requests
@@ -104,15 +104,9 @@ def parseDocument(path):
     tables = soup.find_all("table")
 
     audience = soup.find('font').next_sibling.get_text(separator="|", strip=True).split("|")[0]
-    # print(audience)
-    # audienceText = soup.find_all('font')[-1].get_text(strip=True)
-    # audience = audienceText.split('<br>')[0].strip()
-    # print(audience)
 
     for table in tables:
         parseTable(table, audience)
-
-    # return tablesList
 
 
 def unzipDirectory():
@@ -137,7 +131,7 @@ unzipDirectory()
 
 
 parseResult = []
-documents = [f"unzipped\\{file}" for file in os.listdir("unzipped") if file.endswith(".html")]
+documents = [str(file) for file in Path("unzipped").iterdir() if Path(file).is_file()]
 # print(documents)
 for document in documents:
     cleanHTML(document)
