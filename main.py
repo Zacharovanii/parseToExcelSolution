@@ -148,6 +148,8 @@ def changeToValid(table, audience):
     return t
 
 
+unzipDirectory()
+
 def parseHTML(path):
     with open(path, "r", encoding="windows-1251") as file:
         html_content = file.read()
